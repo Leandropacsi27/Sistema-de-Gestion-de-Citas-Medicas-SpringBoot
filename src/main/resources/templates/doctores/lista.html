@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>👨‍⚕️ Lista de Doctores</h1>
+
+    <div class="mb-3">
+        <a th:href="@{/}" class="btn btn-secondary">🏠 Inicio</a>
+        <a th:href="@{/doctores/nuevo}" class="btn btn-primary">➕ Nuevo Doctor</a>
+        <a th:href="@{/pacientes}" class="btn btn-primary">👥 Pacientes</a>
+        <a th:href="@{/citas}" class="btn btn-info">📅 Citas</a>
+    </div>
+
+    <div th:if="${doctores.empty}">
+        <p>No hay doctores registrados</p>
+    </div>
+
+    <table class="table table-striped" th:unless="${doctores.empty}">
+        <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Especialidad</th>
+            <th>Consultorio</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="doctor : ${doctores}">
+            <td th:text="${doctor.nombre}"></td>
+            <td th:text="${doctor.especialidad}"></td>
+            <td th:text="${doctor.consultorio}"></td>
+            <td>
+                <a th:href="@{/doctores/editar/{id}(id=${doctor.id})}"
+                   class="btn btn-warning btn-sm">Editar</a>
+                <a th:href="@{/doctores/eliminar/{id}(id=${doctor.id})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('¿Está seguro de eliminar este doctor?')">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
